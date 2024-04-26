@@ -29,14 +29,16 @@ namespace PMLabs
 
         public static void InitSound()
         {
+
             device = ALC.OpenDevice(null);
             context = ALC.CreateContext(device, new ALContextAttributes());
             ALC.MakeContextCurrent(context);
+            AL.Source(source, ALSourceb.Looping, true);
 
             buf = AL.GenBuffer();
 
             int channels, bits, sampleFreq;
-            byte[] data = Helpers.LoadWave("test.wav", out channels, out bits, out sampleFreq);
+            byte[] data = Helpers.LoadWave("misc_sound.wav", out channels, out bits, out sampleFreq);
             AL.BufferData<byte>(buf, Helpers.GetFormat(channels, bits), data, sampleFreq);
 
             source = AL.GenSource();
@@ -47,7 +49,9 @@ namespace PMLabs
 
         }
 
-        public static void FreeSound()
+
+
+        public static void FreeSound() // zerowanie dzwieku
         {
             AL.SourceStop(source);
             AL.DeleteSource(source); 
